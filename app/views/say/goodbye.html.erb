@@ -1,0 +1,54 @@
+	<h3 style="color:pink"><%= @message %></h3>
+	<a href="/say/hello">Say hello </a><br/>
+	<%= link_to "say hello", say_hello_path%>
+
+
+
+
+
+	 <h3> Total clients  <%= @clients_count %></h3>
+
+	 <h3> Total projects <%= @projects_count %> </h3>
+
+	 <h3> Total tasks <%= @tasks_count %> </h3>
+
+
+	 <h3> Listing Projects </h3>
+	 <table border="1"  bgcolor="lavender" class="table table-striped">
+	 	
+	 	<thead>
+	 		<tr>
+	 			<th style="color:red"> Sl No </th>
+	 			<th style="color:red"> Name </th>
+	 			<th style="color:red"> Description </th>
+	 			<th style="color:red"> Status </th>
+	 			<th style="color:red"> Start_Date </th>
+	 			<th style="color:red"> Client_id </th>
+	 		</tr>
+	 	</thead>
+	 </tbody>
+
+     <% @projects.each_with_index do |project,index| %>
+
+        <tr> 
+        	<td style="color:green"> <%= index+1 %></td>
+        	<td style="color:green"> <%= project.name %> </td>
+        	<td style="color:green"> <%= project.description%> </td>
+        	<td style="color:green"> <%= project.status%> </td>
+        	<td style="color:green"> <%= project.start_date %></td>
+        	<td style="color:green"> <%= project.client_id %></td>
+        </tr>
+        <% end%>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+	 
