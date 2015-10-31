@@ -1,0 +1,9 @@
+<h3> <%= @client.name %></h3>
+<h3> <%= @client.company%> | <%= @client.email %>| <%= @client.mobile%>| <%= @client.website %></h3>
+<small> <%= link_to "edit", edit_client_path(@client)%></small>
+<%= link_to "delete", client_path(@client), method: :delete, data: {confirm: "are you sure"} %> 
+<hr>
+<h3> Total Project :<%= @projects.size %></h3>
+<% for project in @projects %>
+  <li><%=  project.details %></li>
+  <%end%>

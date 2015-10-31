@@ -13,4 +13,5 @@ class SayController < ApplicationController
     @projects=Project.all 
     @tasks=Task.all
   end
+  
 end

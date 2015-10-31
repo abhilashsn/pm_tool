@@ -4,7 +4,16 @@ class Project < ActiveRecord::Base
 	has_many :tasks
 	has_many :project_categories
 	has_many :categories, through: :project_categories
-	
+	belongs_to :client
+	validates_presence_of :name, :status, :start_date, :client_id
+	validates_presence_of :start_date, message: "start date should be present"
+
+	validates_numericality_of :client_id
+	validates_uniqueness_of :name, scope: :client_id
+
+	validate :check_start_date
+	#before_after :generate_code
+
 	def details
 		"#{name}---#{status}-----#{start_date}----#{description}---- #{Client.find(client_id).name}"
 	end
@@ -33,4 +42,25 @@ class Project < ActiveRecord::Base
 		Project.where('status =?',"completed")
 	end
 
+	private
+
+	def check_start_date
+		if !self.start_date.nil? && self.start_date < Date.today
+			errors.add(:start_date,"Date is invalid. shouldnt be less than #{Date.today}")
+	end
+	end
+
+
+
+	def self.find_client
+		if self.client_id.n
+			Project.all
+		end
+	end
+
+
+
+	#def generate_code
+	#	self.code = "#{Random.rand(1000)}"
+#end
 end

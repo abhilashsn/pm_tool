@@ -1,0 +1,40 @@
+	
+
+	 <h3> Listing Tasks </h3>
+	 <table border="1"  bgcolor="lavender" class="table table-striped">
+	 	
+	 	<thead>
+	 		<tr>
+	 			<th style="color:red"> Sl No </th>
+	 			<th style="color:red"> Name </th>
+	 			<th style="color:red"> Due Date </th>
+	 			<th style="color:red"> is_completed </th>
+	 			<th style="color:red"> project_id </th>
+	 		</tr>
+	 	</thead>
+	 </tbody>
+
+     <% @tasks.each_with_index do |task,index| %>
+
+        <tr> 
+        	<td style="color:green"> <%= index+1 %></td>
+        	<td style="color:green"> <%= task.name %> </td>
+        	<td style="color:green"> <%= task.due_date %> </td>
+        	<td style="color:green"> <%= task.is_completed%> </td>
+        	<td style="color:green"> <%= task.project_id %></td>
+    
+        </tr>
+        <% end%>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+	 

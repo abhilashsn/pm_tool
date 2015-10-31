@@ -1,0 +1,12 @@
+<% if @clients.empty? %>
+<p> no clients found </p>
+<%else%>
+	<ul>
+		<% for client in @clients %>
+		<li style="color:magenta"><%= link_to client.name, client_path(client) %></li>
+		<%end%>
+	</ul>
+<%end%>
+
+
+	<%= link_to "Add Client", new_client_path %>

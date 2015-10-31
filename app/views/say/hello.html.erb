@@ -8,7 +8,20 @@
 	 <h3> Total tasks <%= @tasks_count %> </h3>
 
 
-	 <h3> Listing Clients </h3>
+
+
+	 
+	 <% Client.all.each do |client| %>
+	 <h3 style="color:red"><%= client.name %></h3>
+	 <ul>
+     <% client.projects.each do |project| %>
+     <li style="color:#E0218A"><%= project.name %></li>
+     <% end %>
+     </ul>
+     <% end %>
+
+     <h1 style='color:red'> Listing Clients </h1>
+
 	 <table border="1"  bgcolor="lavender" class="table table-striped">
 	 	
 	 	<thead>
@@ -18,6 +31,8 @@
 	 			<th style="color:red"> Company </th>
 	 			<th style="color:red"> Email </th>
 	 			<th style="color:red"> WebSite </th>
+	 			<th style="color:red"> projectcount <th/>
+	 			
 	 		</tr>
 	 	</thead>
 	 </tbody>
@@ -30,7 +45,13 @@
         	<td style="color:green"> <%= client.company%> </td>
         	<td style="color:green"> <%= client.email%> </td>
         	<td style="color:green"> <%= client.website %></td>
-        </tr>
+        	<td style="color:green"> <%= client.projects.size %></td>
+        	
+	        	
+	        	
+
+        	
+        	</tr>
         <% end%>
     </tbody>
 </table>
