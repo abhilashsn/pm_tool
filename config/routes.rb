@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :customers
   get 'dashboard/index'
 
+  resources :categories
   resources :vendors
   devise_for :users
   get 'say/hello'

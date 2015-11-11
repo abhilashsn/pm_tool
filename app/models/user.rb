@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 	has_one :profile
 	has_many :permissions
 	has_many :roles, through: :permissions
+	has_many :categories
 
 
 
