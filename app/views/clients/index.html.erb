@@ -9,4 +9,7 @@
 <%end%>
 
 
+
+	<% if can? :create, Client.new %>
 	<%= link_to "Add Client", new_client_path %>
+	<%end%>

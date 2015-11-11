@@ -5,7 +5,7 @@
 <%=  f.text_field :name %><br/>
 
 <label> Client </label>
-<%= f.collection_select :client_id, Client.all, :id, :company, prompt: "select client"%><br/>
+<%= f.collection_select :client_id, current_user.clients, :id, :company, prompt: "select client"%><br/>
 
 <label> Description </label>
 <%= f.text_area :description%></br>

@@ -1,9 +1,10 @@
 10.times do 
 	client = Client.new
-	client.name = Faker::Name.name
+	client.name = Faker::Name.first_name
 	client.company = Faker::Company.name
 	client.website = Faker::Internet.domain_name
 	client.email = "#{client.name}@#{client.website}"
+	client.mobile = Faker::Number.number(10)
 	client.save
 end
 
@@ -29,6 +30,15 @@ for project in Project.all
 num = [1,2,3,4].shuffle.first
 categories = Category.first(num)
 project.categories << categories
+end
+
+user_ids = User.all.pluck(:id)
+for client in Client.all
+ client.user_id = user_ids.shuffle.first
+  	client.update_attributes(user_id: client.user_id)
+for project in client.projects
+ 	project.update_attributes(user_id: client.user_id)
+ end
 end
 
 

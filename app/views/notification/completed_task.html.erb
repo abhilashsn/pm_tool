@@ -1,0 +1,8 @@
+<p> Dear <%= @task.project.client.name%>, </p>
+<p>
+
+	The task (<%= @task.name %> ) belonging to <%= @task.project.name%> due to <%=
+	@task.due_date.strftime("%A, %d %B %Y") %> has been completed.
+</p>
+regards,<br/>
+<%= @task.project.user.email%>

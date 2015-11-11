@@ -1,0 +1,42 @@
+
+  <cener> <h3 style="color:green"> Listing Project Tasks</h1></center> 
+	<% Project.all.each do |project| %>
+	 <h4 style="color:red"><%= project.name %></h3>
+	 <ul>
+     <% project.tasks.each do |task| %>
+     <li style="color:#E0218A"><%= task.name %></li>
+     <% end %>
+     </ul>
+     <% end %>
+
+
+     <h3> Listing all projects</h3>
+     <%= link_to "Export", projects_path(format: "xls")%>
+     <%= link_to "All projects", projects_path%>
+     <%= link_to "add projects", new_project_path %>
+     <table border=1>
+     	<thead>
+     		<tr> 
+     			<th> Sl No </th>
+     			<th> name</th>
+     			<th> status</th>
+     			<th> start_date</th>
+     			<th>client</th>
+                    <th>Completed task</th>
+     		</tr>
+     	</thead>
+     <tbody>
+
+     <% @projects.each_with_index do |project,index|%>
+     <tr> 
+     	<td> <%= index + 1 %> </td>
+          <td> <%= link_to project.name, project_path(project)%> </td>
+     	<td> <%= project.status %></td>
+     	<td> <%= project.start_date.strftime("%A,%d,%B,%Y")%></td>
+     	<td> <%= project.client.try(:name) %> </td>
+          <td> <%= link_to "set as current project", projects_set_current_project_path(project_id:project.id)%></td>
+          <td><%= project.tasks.where('is_completed=?',true).size%></td>
+     </tr>
+     <%end%>
+ </tbody>
+</table>

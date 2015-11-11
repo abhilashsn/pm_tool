@@ -1,4 +1,8 @@
 class ClientsController < ApplicationController
+	before_filter :authenticate_user!
+	before_filter :find_record, only: [:show, :edit]
+	load_and_authorize_resource
+
 	#index - listing resources 
 	#new - setting up object to be used in forms
 	#create -insert the form record into database
@@ -7,9 +11,8 @@ class ClientsController < ApplicationController
 	#update - update info into db coming from form 
 	#destroy - used to delete the record from the db
 	def index
-		@clients = Client.all 
-         
-	end
+		@clients = (current_user.role? "sales") ? Client.all : current_user.clients
+    end
 
 	def new
 		@clients = Client.new
@@ -25,16 +28,11 @@ class ClientsController < ApplicationController
 	end
 
 	def show 
-		begin
-		@client = Client.find(params[:id])
-		@projects = @client.projects
-	rescue ActiveRecord::RecordNotFound
-		redirect_to clients_path
+		
 	end
-end
 
 	def edit 
-		@client = Client.find(params[:id])
+		
 	end
 
 
@@ -56,6 +54,14 @@ end
 
 
 		private
+
+		def find_record
+		@client = (current_user.role? "sales") ? Client.find(params[:id]) : current_user.clients.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+		redirect_to clients_path, notice: "Record Not Found"
+		
+		end
+
 
 		def client_params
 			params[:client].permit(:name, :company, :email, :website, :mobile)

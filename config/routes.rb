@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
+  
+  get 'dashboard/index'
+
+  resources :vendors
+  devise_for :users
   get 'say/hello'
   get 'say/goodbye'
   get 'happy/hi'
   get 'tasks/mark_as_complete'
   get 'tasks/mark_as_incomplete'
+  root 'projects#index'
+  get 'projects/set_current_project'
+  get 'projects/current_project'
+
 
   resources :clients
   resources :projects do 

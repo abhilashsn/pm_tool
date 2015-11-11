@@ -1,13 +1,38 @@
 <h3 style="color:red"> <%= @project.name %> <h3>
 <p style="color:magenta"><%= @project.details%> </p>
 
+<strong> Project name <%#= current_project.name%></strong>
+
 
 
 
 <% tasks = @project.tasks %>
 <h3>Total Tasks - <%= tasks.size %><h3>
 
+
 	<% over_due_tasks = tasks.where('is_completed = ? AND due_date < ?',false, Date.today)%>
+
+<% incomplete_tasks = tasks.where('is_completed = ? AND due_date >= ?',false,Date.today)%>
+
+<% completed_tasks = tasks.where('is_completed = ?',true) %>
+
+
+
+
+	<% data ={"completed" => completed_tasks.size, "incomplete" => incomplete_tasks.size, "over_due" => over_due_tasks.size}%>
+
+	<%= pie_chart(data)%>
+
+	<% dates = []%>
+
+	<% @project.tasks.order('due_date').each do |task|%>
+	<%dates.push(["#{task.name}", (@project.start_date > task.due_date - 6.days) ? @project.start_date :(task.due_date - 6.days), task.due_date]) %>
+	<%end%>
+
+
+	<%= timeline dates%>
+
+
 <h3> Overdue Tasks - <%= over_due_tasks.size %></h3>
 
 
@@ -18,7 +43,6 @@
 
 
 
-<% incomplete_tasks = tasks.where('is_completed = ? AND due_date >= ?',false,Date.today)%>
 <h3> Incomplete Taks - <%= incomplete_tasks.size %></h3>
 <ul>
 
@@ -27,7 +51,6 @@
 	<%end%>
 </ul>
 
-<% completed_tasks = tasks.where('is_completed = ?',true) %>
 <h3> completed tasks - <%= completed_tasks.size %></h3>
 <ul>
 

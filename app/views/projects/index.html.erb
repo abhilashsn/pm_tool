@@ -11,6 +11,27 @@
 
 
      <h3> Listing all projects</h3>
+
+
+
+
+     <% data = {} %>
+     <% Client.all.each do |client| %>
+     <% data["#{client.name}"] =client.projects.size%>
+     <%end%>
+
+     <%= pie_chart(data)%>
+
+     <% projects = {}%>
+
+     <% Project.all.each do |project|%>
+     <% projects["#{project.name}"]=project.tasks.size%>
+     <%end%>
+     <%= column_chart(projects)%>
+
+
+     <%= link_to "Export", projects_path(format: "xls")%>
+     <%= link_to "All projects", projects_path%>
      <%= link_to "add projects", new_project_path %>
      <table border=1>
      	<thead>
@@ -20,7 +41,6 @@
      			<th> status</th>
      			<th> start_date</th>
      			<th>client</th>
-     			<th>task</th>
      		</tr>
      	</thead>
      <tbody>
@@ -32,7 +52,7 @@
      	<td> <%= project.status %></td>
      	<td> <%= project.start_date.strftime("%A,%d,%B,%Y")%></td>
      	<td> <%= project.client.try(:name) %> </td>
-          <td> <%#= project.task %></td>
+          <td> <%= link_to "set as current project", projects_set_current_project_path(project_id:project.id)%>
      </tr>
      <%end%>
  </tbody>

@@ -5,17 +5,18 @@ class Project < ActiveRecord::Base
 	has_many :project_categories
 	has_many :categories, through: :project_categories
 	belongs_to :client
-	validates_presence_of :name, :status, :start_date, :client_id
-	validates_presence_of :start_date, message: "start date should be present"
+	belongs_to :user
+	#validates_presence_of :name, :status, :start_date, :client_id
+	#validates_presence_of :start_date, message: "start date should be present"
 
-	validates_numericality_of :client_id
-	validates_uniqueness_of :name, scope: :client_id
+	#validates_numericality_of :client_id
+	#validates_uniqueness_of :name, scope: :client_id
 
-	validate :check_start_date
+	#validate :check_start_date
 	#before_after :generate_code
 
 	def details
-		"#{name}---#{status}-----#{start_date}----#{description}---- #{Client.find(client_id).name}"
+		"#{name}---#{status}-----#{start_date}----#{description}---- #{Client.find(client_id).name}---#{Client.find(client_id).email}"
 	end
 
 	def self.by_range(start_date,end_date)
